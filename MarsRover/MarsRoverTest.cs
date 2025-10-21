@@ -158,6 +158,45 @@ public class MarsRoversTest
         estaEnPosicion.Should().BeTrue();
         estaEnOrientacion.Should().BeTrue();
     }
+    
+    [Fact]
+    public void Si_SeLeDaLaInstruccion_RMM_AlRoverYEstaEnUnaPosicionDeterminada_Debe_GirarALaDerechaYAvanzarAlFrenteDosVeces()
+    {
+        //Arrange
+        var rover = new Rover(3,2,"N");
+        
+        //Act
+        rover.EjecutarInstrucciones("RMM");
+
+        //Assert
+        var estaEnPosicion = rover.EstaEnPosicion(5, 2);
+        var estaEnOrientacion = rover.EstaEnOrientacion("E");
+
+        estaEnPosicion.Should().BeTrue();
+        estaEnOrientacion.Should().BeTrue();
+    }
+    
+    [Theory]
+    [InlineData(0,2,"S", "MMRR")]
+    [InlineData(1,1,"N", "RMLM")]
+    [InlineData(0,1,"O", "LLLLML")]
+    [InlineData(1,2,"E", "MMLLLM")]
+    [InlineData(4,4,"N", "RMLMRMLMRMLMRMLM")]
+    public void Si_SeLeDaLaInstruccion_Debe_EjecutarElComportamientoEsperadoDeAcuerdoA(int coordenadaXEsperada, int coordenadaYEsperada, string orientacionEsperada, string instrucciones)
+    {
+        //Arrange
+        var rover = new Rover(0,0,"N");
+        
+        //Act
+        rover.EjecutarInstrucciones(instrucciones);
+
+        //Assert
+        var estaEnPosicion = rover.EstaEnPosicion(coordenadaXEsperada, coordenadaYEsperada);
+        var estaEnOrientacion = rover.EstaEnOrientacion(orientacionEsperada);
+
+        estaEnPosicion.Should().BeTrue();
+        estaEnOrientacion.Should().BeTrue();
+    }
 }
 
 public class Rover(int coordenadaX, int coordenadaY, string orientacion)
@@ -224,6 +263,9 @@ public class Rover(int coordenadaX, int coordenadaY, string orientacion)
                 break;
             case "O":
                 CoordenadaX--;
+                break;
+            case "E":
+                CoordenadaX++;
                 break;
         }
     }
