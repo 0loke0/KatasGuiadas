@@ -61,7 +61,7 @@ public class MarsRoversTest
         var rover = new Rover(1,2,"N");
         
         //Act
-        rover.EjecutarInstruccion("M");
+        rover.EjecutarInstrucciones("M");
 
         //Assert
         var estaEnPosicion = rover.EstaEnPosicion(1, 3);
@@ -73,17 +73,52 @@ public class MarsRoversTest
     
     //[ ] Los rovers pueden girar a la izquierda con la instrucción 'L'.
     [Fact]
-    public void Si_SeLeDaLaInstruccion_L_ElRoverQueEstaEnLaOrientacion_N_Debe_GirarHaciaLaIzquierdaYQuedarEnLaOrientacion_Oeste()
+    public void Si_SeLeDaLaInstruccion_L_ElRoverQueEstaEnLaOrientacion_N_Debe_GirarHaciaLaIzquierdaYQuedarEnLaOrientacion_O()
     {
         //Arrange
         var rover = new Rover(1,2,"N");
         
         //Act
-        rover.EjecutarInstruccion("L");
+        rover.EjecutarInstrucciones("L");
 
         //Assert
         var estaEnPosicion = rover.EstaEnPosicion(1, 2);
         var estaEnOrientacion = rover.EstaEnOrientacion("O");
+
+        estaEnPosicion.Should().BeTrue();
+        estaEnOrientacion.Should().BeTrue();
+    }
+    
+    [Fact]
+    public void Si_SeLeDaLaInstruccion_R_ElRoverQueEstaEnLaOrientacion_N_Debe_GirarHaciaLaDerechaYQuedarEnLaOrientacion_E()
+    {
+        //Arrange
+        var rover = new Rover(1,2,"N");
+        
+        //Act
+        rover.EjecutarInstrucciones("R");
+
+        //Assert
+        var estaEnPosicion = rover.EstaEnPosicion(1, 2);
+        var estaEnOrientacion = rover.EstaEnOrientacion("E");
+
+        estaEnPosicion.Should().BeTrue();
+        estaEnOrientacion.Should().BeTrue();
+    }
+    
+    //Si el rover está orientado en 'N' y se le da la instrucción 'RR' su orientación final debe ser 'S'
+    [Fact]
+    public void Si_SeLeDaLaInstruccion_RR_ElRoverQueEstaEnLaOrientacion_N_Debe_GirarHaciaLaDerechaYQuedarEnLaOrientacion_S()
+    {
+        //Arrange
+        var rover = new Rover(1,2,"N");
+        
+        //Act
+        rover.EjecutarInstrucciones("RR");
+
+        //Assert
+        var estaEnPosicion = rover.EstaEnPosicion(1, 2);
+        var estaEnOrientacion = rover.EstaEnOrientacion("S");
 
         estaEnPosicion.Should().BeTrue();
         estaEnOrientacion.Should().BeTrue();
@@ -101,12 +136,60 @@ public class Rover(int coordenadaX, int coordenadaY, string orientacion)
 
     public bool EstaEnOrientacion(string orientacionEsperada) => orientacionEsperada == Orientacion;
 
-    public void EjecutarInstruccion(string instruccion)
+    public void EjecutarInstrucciones(string instrucciones)
     {
-        if (instruccion == "L")
-            Orientacion = "O";
-        else
-            CoordenadaY++;
+        foreach (var instruccion in instrucciones.ToList())
+        {
+            switch (instruccion)
+            {
+                case 'L':
+                    GirarIzquierda();
+                    break;
+                case 'R':
+                    GirarDerecha();
+                    break;
+                case 'M':
+                    Avanzar();
+                    break;
+            }
+        }
+    }
+
+    private void GirarDerecha()
+    {
+        Orientacion = Orientacion switch
+        {
+            "N" => "E",
+            "E" => "S",
+            "S" => "O",
+            "O" => "N",
+        };
+    }
+
+    private void GirarIzquierda()
+    {
+        Orientacion = Orientacion switch
+        {
+            "N" => "O",
+            "O" => "S",
+            "S" => "E",
+            "E" => "N",
+        };
+    }
+
+    private void Avanzar()
+    {
+        switch (Orientacion)
+        {
+            case "N": CoordenadaY++;
+                break;
+            case "S": CoordenadaY--;
+                break;
+            case "E": CoordenadaX++;
+                break;
+            case "O": CoordenadaX--;
+                break;
+        }
     }
 }
 
