@@ -6,13 +6,13 @@ public class MarsRoversTest
 {
     
     //La meseta debe tener dimensiones especificas (x e y).
-    [Fact]
-    public void La_meseta_debe_tener_dimensiones_especificas()
+    [Theory]
+    [InlineData(5, 5)]
+    [InlineData(7, 7)]
+    public void La_meseta_debe_tener_dimensiones_especificas(int coordenadaMaximaX, int coordenadaMaximaY)
     {
         //Arrange
-        var coordenadaMaximaX = 5;
-        var coordenadaMaximaY = 5;
-
+     
         //Act
         var meseta = new Meseta(coordenadaMaximaX, coordenadaMaximaY);
         
@@ -20,16 +20,12 @@ public class MarsRoversTest
         meseta.CoordenadaMaximaX.Should().Be(coordenadaMaximaX);
         meseta.CoordenadaMaximaY.Should().Be(coordenadaMaximaY);
     }
+    
 }
 
-public class Meseta
+public class Meseta(int coordenadaMaximaX, int coordenadaMaximaY)
 {
 
-    public int CoordenadaMaximaX { get; set; } = 5;
-    public int CoordenadaMaximaY { get; set; } = 5;
-    public Meseta(int coordenadaMaximaX, int coordenadaMaximaY)
-    {
-        
-    }
-
+    public int CoordenadaMaximaX { get; init; } = coordenadaMaximaX;
+    public int CoordenadaMaximaY { get; init; } = coordenadaMaximaY;
 }
