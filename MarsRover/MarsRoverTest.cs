@@ -197,6 +197,22 @@ public class MarsRoversTest
         estaEnPosicion.Should().BeTrue();
         estaEnOrientacion.Should().BeTrue();
     }
+    
+    //Cuando un Rover termina su recorrido comunica su posición.
+    [Theory]
+    [InlineData(1,2,"N", "LMLMLMLMM", "1 3 N")]
+    [InlineData(3,3,"E", "MMRMMRMRRM", "5 1 E")]
+    public void Si_UnRoverTerminaSuRecorrido_Debe_ComunicarSuPosicion(int coordenadaX, int coordenadaY, string orientacion, string instrucciones, string mensajeEsperado)
+    {
+        // Arrange
+        var rover = new Rover(coordenadaX,coordenadaY,orientacion);
+        rover.EjecutarInstrucciones(instrucciones);
+        // Act
+        string mensajeEnPosicion = rover.ComunicarPosicion();
+        
+        // Assert
+        mensajeEnPosicion.Should().Be(mensajeEsperado);
+    }
 }
 
 public class Rover(int coordenadaX, int coordenadaY, string orientacion)
@@ -269,6 +285,8 @@ public class Rover(int coordenadaX, int coordenadaY, string orientacion)
                 break;
         }
     }
+
+    public string ComunicarPosicion() => $"{CoordenadaX} {CoordenadaY} {Orientacion}";
 }
 
 public class Meseta(int coordenadaMaximaX, int coordenadaMaximaY)
