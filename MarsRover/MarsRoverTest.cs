@@ -141,6 +141,23 @@ public class MarsRoversTest
         estaEnPosicion.Should().BeTrue();
         estaEnOrientacion.Should().BeTrue();
     }
+    
+    [Fact]
+    public void Si_SeLeDaLaInstruccion_LMM_AlRoverYEstaEnUnaPosicionDeterminada_Debe_GirarALaIzquierdaYAvanzarAlFrenteDosVeces()
+    {
+        //Arrange
+        var rover = new Rover(3,2,"N");
+        
+        //Act
+        rover.EjecutarInstrucciones("LMM");
+
+        //Assert
+        var estaEnPosicion = rover.EstaEnPosicion(1, 2);
+        var estaEnOrientacion = rover.EstaEnOrientacion("O");
+
+        estaEnPosicion.Should().BeTrue();
+        estaEnOrientacion.Should().BeTrue();
+    }
 }
 
 public class Rover(int coordenadaX, int coordenadaY, string orientacion)
@@ -197,10 +214,18 @@ public class Rover(int coordenadaX, int coordenadaY, string orientacion)
 
     private void Avanzar()
     {
-        if(Orientacion == "N")
-            CoordenadaY++;
-        if(Orientacion == "S")
-            CoordenadaY--;
+        switch (Orientacion)
+        {
+            case "N":
+                CoordenadaY++;
+                break;
+            case "S":
+                CoordenadaY--;
+                break;
+            case "O":
+                CoordenadaX--;
+                break;
+        }
     }
 }
 
