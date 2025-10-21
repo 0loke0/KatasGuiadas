@@ -70,6 +70,24 @@ public class MarsRoversTest
         estaEnPosicion.Should().BeTrue();
         estaEnOrientacion.Should().BeTrue();
     }
+    
+    //[ ] Los rovers pueden girar a la izquierda con la instrucción 'L'.
+    [Fact]
+    public void Si_SeLeDaLaInstruccion_L_ElRoverQueEstaEnLaOrientacion_N_Debe_GirarHaciaLaIzquierdaYQuedarEnLaOrientacion_Oeste()
+    {
+        //Arrange
+        var rover = new Rover(1,2,"N");
+        
+        //Act
+        rover.EjecutarInstruccion("L");
+
+        //Assert
+        var estaEnPosicion = rover.EstaEnPosicion(1, 2);
+        var estaEnOrientacion = rover.EstaEnOrientacion("O");
+
+        estaEnPosicion.Should().BeTrue();
+        estaEnOrientacion.Should().BeTrue();
+    }
 }
 
 public class Rover(int coordenadaX, int coordenadaY, string orientacion)
@@ -85,7 +103,10 @@ public class Rover(int coordenadaX, int coordenadaY, string orientacion)
 
     public void EjecutarInstruccion(string instruccion)
     {
-        CoordenadaY++;
+        if (instruccion == "L")
+            Orientacion = "O";
+        else
+            CoordenadaY++;
     }
 }
 
