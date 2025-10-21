@@ -52,6 +52,24 @@ public class MarsRoversTest
         estaEnPosicion.Should().BeFalse();
         estaEnOrientacion.Should().BeFalse();
     }
+    
+    //[ ] Los rovers pueden avanzar al frente con la instrucción 'M'
+    [Fact]
+    public void Si_SeLeDaLaInstruccion_M_AlRoverYEstaEnUnaPosicionDeterminada_Debe_AvanzarAlFrente()
+    {
+        //Arrange
+        var rover = new Rover(1,2,"N");
+        
+        //Act
+        rover.EjecutarInstruccion("M");
+
+        //Assert
+        var estaEnPosicion = rover.EstaEnPosicion(1, 3);
+        var estaEnOrientacion = rover.EstaEnOrientacion("N");
+
+        estaEnPosicion.Should().BeTrue();
+        estaEnOrientacion.Should().BeTrue();
+    }
 }
 
 public class Rover(int coordenadaX, int coordenadaY, string orientacion)
@@ -65,6 +83,10 @@ public class Rover(int coordenadaX, int coordenadaY, string orientacion)
 
     public bool EstaEnOrientacion(string orientacionEsperada) => orientacionEsperada == Orientacion;
 
+    public void EjecutarInstruccion(string instruccion)
+    {
+        CoordenadaY++;
+    }
 }
 
 public class Meseta(int coordenadaMaximaX, int coordenadaMaximaY)
