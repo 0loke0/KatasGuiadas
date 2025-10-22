@@ -60,6 +60,7 @@ public class YatziTest
     [Theory]
     [InlineData(new int[] { 1, 5, 3, 6, 6 }, 12)]
     [InlineData(new int[] { 1, 2, 3, 4, 5 }, 0)]
+    [InlineData(new int[] { 1, 1, 3, 2, 2 }, 4)]
     public void Si_TengoValoresDados_Y_TengoLaCategoriaPar_Debe_Dar_PuntajeEsperado(int[] valoresDados,
         int puntajeEsperado)
     {
@@ -108,6 +109,7 @@ public class YatziTest
         var primerParEncontrado = valoresDados.GroupBy(valorDado => valorDado)
             .Where(grupo => grupo.Count() > 1)
             .Select(grupo => grupo.Key)
+            .OrderByDescending(grupo => grupo)
             .FirstOrDefault();
         return primerParEncontrado * 2;
     }
