@@ -75,6 +75,7 @@ public class YatziTest
     [Theory]
     [InlineData(new[] { 1,1,2,3,3 }, 8)]
     [InlineData(new[] { 1,1,2,3,4 }, 0)]
+    [InlineData(new[] { 1,1,1,1,4 }, 0)]
     public void Si_TengoValoresDados_Y_TengoLaCategoria_Two_Pair_Debe_Dar_PuntajeEsperado(int[] valoresDados, int puntajeEsperado)
     {
         //Arrange
@@ -103,6 +104,18 @@ public class YatziTest
 
     }
 
+    [Theory]
+    [InlineData(new[] {1 ,1 ,1 ,1 ,3}, 4)]
+    public void Si_TengoValoresDados_Y_TengoLaCategoria_Four_Of_A_Kind_Debe_Dar_PuntajeEsperando(int[] valoresDados, int puntajeEsperado)
+    {
+        //Arrange
+        var categoria = "four of a kind";
+        //Act
+        var puntajeCalculado = CalcularPuntaje(valoresDados, categoria);
+        //Assert
+        puntajeCalculado.Should().Be(puntajeEsperado);
+    }
+
     private int CalcularPuntaje(int[] valoresDados, string categoria)
     {
         return categoria switch
@@ -117,8 +130,19 @@ public class YatziTest
             "pair" => CalcularPares(valoresDados),
             "two pairs" => CalcularDosPares(valoresDados),
             "three of a kind" => CalcularTrio(valoresDados),
+            "four of a kind" => CalcularCuarteto(valoresDados),
             "chance" => CalcularChance(valoresDados)
         };
+    }
+
+    private int CalcularCuarteto(int[] valoresDados)
+    {
+        var valorCuarteto = valoresDados.CountBy(valorDado => valorDado)
+            .Where(conteo => conteo.Value > 3)
+            .Select(conteo => conteo.Key)
+            .FirstOrDefault();
+
+        return valorCuarteto * 4;
     }
 
     private static int CalcularTrio(int[] valoresDados)
