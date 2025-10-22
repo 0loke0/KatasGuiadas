@@ -37,7 +37,14 @@ public class YatziTest
     [InlineData(new int[] { 2,1,2,4,4 }, 4,"twos")]
     [InlineData(new int[] { 2,1,2,5,2 }, 6,"twos")]
     [InlineData(new int[] { 3,3,2,3,2 }, 9,"threes")]
+    [InlineData(new int[] { 1,2,2,5,2 }, 0,"threes")]
     [InlineData(new int[] { 3,3,3,3,2 }, 12,"threes")]
+    [InlineData(new int[] { 4,4,3,2,1 }, 8,"fours")]
+    [InlineData(new int[] { 4,4,3,2,4 }, 12,"fours")]
+    [InlineData(new int[] { 4,5,3,2,1 }, 5,"fives")]
+    [InlineData(new int[] { 4,5,3,5,1 }, 10,"fives")]
+    [InlineData(new int[] { 6,5,3,6,6 }, 18,"sixes")]
+    [InlineData(new int[] { 3,5,1,2,3 }, 0,"sixes")]
     public void Si_TengoValoresDados_Y_TengoAlgunaCategoriaNumerica_Debe_Dar_PuntajeEsperado(int[] valoresDados, int puntajeEsperado,string categoria)
     {
         //Arrange
@@ -55,6 +62,9 @@ public class YatziTest
             "ones" => CalcularNumericas(valoresDados,CategoriasNumericas.Ones),
             "twos" => CalcularNumericas(valoresDados, CategoriasNumericas.Twos),
             "threes" => CalcularNumericas(valoresDados, CategoriasNumericas.Threes),
+            "fours" => CalcularNumericas(valoresDados, CategoriasNumericas.Fours),
+            "fives" => CalcularNumericas(valoresDados, CategoriasNumericas.Fives),
+            "sixes" => CalcularNumericas(valoresDados, CategoriasNumericas.Sixes),
             "chance" => CalcularChance(valoresDados)
         };
     }
