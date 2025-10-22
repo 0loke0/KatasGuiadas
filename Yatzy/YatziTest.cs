@@ -5,8 +5,8 @@ namespace Yatzy;
 public class YatziTest
 {
     [Theory]
-    [InlineData(new int[] { 1, 1, 3, 3, 6 }, 14)]
-    [InlineData(new int[] { 4, 5, 5, 6, 1 }, 21)]
+    [InlineData(new[] { 1, 1, 3, 3, 6 }, 14)]
+    [InlineData(new[] { 4, 5, 5, 6, 1 }, 21)]
     public void Si_TengoValoresDados_Y_TengoLaCategoria_Chance_Debe_Dar_PuntajeEsperado(int[] valoresDados,
         int puntajeEsperado)
     {
@@ -20,8 +20,8 @@ public class YatziTest
     }
 
     [Theory]
-    [InlineData(new int[] { 1, 1, 1, 1, 1 }, 50)]
-    [InlineData(new int[] { 1, 1, 1, 2, 1 }, 0)]
+    [InlineData(new[] { 1, 1, 1, 1, 1 }, 50)]
+    [InlineData(new[] { 1, 1, 1, 2, 1 }, 0)]
     public void Si_TengoValoresDados_Y_TengoLaCategoria_Yatzy_Debe_Dar_PuntajeEsperado(int[] valoresDados,
         int puntajeEsperado)
     {
@@ -34,19 +34,19 @@ public class YatziTest
     }
 
     [Theory]
-    [InlineData(new int[] { 1, 1, 2, 4, 4 }, 2, "ones")]
-    [InlineData(new int[] { 1, 1, 2, 4, 1 }, 3, "ones")]
-    [InlineData(new int[] { 2, 1, 2, 4, 4 }, 4, "twos")]
-    [InlineData(new int[] { 2, 1, 2, 5, 2 }, 6, "twos")]
-    [InlineData(new int[] { 3, 3, 2, 3, 2 }, 9, "threes")]
-    [InlineData(new int[] { 1, 2, 2, 5, 2 }, 0, "threes")]
-    [InlineData(new int[] { 3, 3, 3, 3, 2 }, 12, "threes")]
-    [InlineData(new int[] { 4, 4, 3, 2, 1 }, 8, "fours")]
-    [InlineData(new int[] { 4, 4, 3, 2, 4 }, 12, "fours")]
-    [InlineData(new int[] { 4, 5, 3, 2, 1 }, 5, "fives")]
-    [InlineData(new int[] { 4, 5, 3, 5, 1 }, 10, "fives")]
-    [InlineData(new int[] { 6, 5, 3, 6, 6 }, 18, "sixes")]
-    [InlineData(new int[] { 3, 5, 1, 2, 3 }, 0, "sixes")]
+    [InlineData(new[] { 1, 1, 2, 4, 4 }, 2, "ones")]
+    [InlineData(new[] { 1, 1, 2, 4, 1 }, 3, "ones")]
+    [InlineData(new[] { 2, 1, 2, 4, 4 }, 4, "twos")]
+    [InlineData(new[] { 2, 1, 2, 5, 2 }, 6, "twos")]
+    [InlineData(new[] { 3, 3, 2, 3, 2 }, 9, "threes")]
+    [InlineData(new[] { 1, 2, 2, 5, 2 }, 0, "threes")]
+    [InlineData(new[] { 3, 3, 3, 3, 2 }, 12, "threes")]
+    [InlineData(new[] { 4, 4, 3, 2, 1 }, 8, "fours")]
+    [InlineData(new[] { 4, 4, 3, 2, 4 }, 12, "fours")]
+    [InlineData(new[] { 4, 5, 3, 2, 1 }, 5, "fives")]
+    [InlineData(new[] { 4, 5, 3, 5, 1 }, 10, "fives")]
+    [InlineData(new[] { 6, 5, 3, 6, 6 }, 18, "sixes")]
+    [InlineData(new[] { 3, 5, 1, 2, 3 }, 0, "sixes")]
     public void Si_TengoValoresDados_Y_TengoAlgunaCategoriaNumerica_Debe_Dar_PuntajeEsperado(int[] valoresDados,
         int puntajeEsperado, string categoria)
     {
@@ -58,10 +58,10 @@ public class YatziTest
     }
 
     [Theory]
-    [InlineData(new int[] { 1, 5, 3, 6, 6 }, 12)]
-    [InlineData(new int[] { 1, 2, 3, 4, 5 }, 0)]
-    [InlineData(new int[] { 1, 1, 3, 2, 2 }, 4)]
-    public void Si_TengoValoresDados_Y_TengoLaCategoriaPar_Debe_Dar_PuntajeEsperado(int[] valoresDados,
+    [InlineData(new[] { 1, 5, 3, 6, 6 }, 12)]
+    [InlineData(new[] { 1, 2, 3, 4, 5 }, 0)]
+    [InlineData(new[] { 1, 1, 3, 2, 2 }, 4)]
+    public void Si_TengoValoresDados_Y_TengoLaCategoria_Par_Debe_Dar_PuntajeEsperado(int[] valoresDados,
         int puntajeEsperado)
     {
         //Arrange
@@ -70,6 +70,37 @@ public class YatziTest
         var puntajeCalculado = CalcularPuntaje(valoresDados, categoria);
         //Assert
         puntajeCalculado.Should().Be(puntajeEsperado);
+    }
+
+    [Theory]
+    [InlineData(new[] { 1,1,2,3,3 }, 8)]
+    [InlineData(new[] { 1,1,2,3,4 }, 0)]
+    public void Si_TengoValoresDados_Y_TengoLaCategoria_Two_Pair_Debe_Dar_PuntajeEsperado(int[] valoresDados, int puntajeEsperado)
+    {
+        //Arrange
+        var categoria = "two pairs";
+        //Act
+        var puntajeCalculado = CalcularPuntaje(valoresDados, categoria);
+        //Assert
+        puntajeCalculado.Should().Be(puntajeEsperado);
+    }
+
+    [Theory]
+    [InlineData(new[] { 4, 4, 4, 3, 1}, 12)]
+    [InlineData(new[] { 2, 3, 5, 5, 5}, 15)]
+    [InlineData(new[] { 2, 3, 5, 5, 1}, 0)]
+    public void Si_TengoValoresDados_Y_TengoLaCategoria_Three_Of_A_Kind_Debe_Dar_PuntajeEsperado(int[] valoresDados,
+        int puntajeEsperado)
+    {
+        //Arrange
+        var categoria = "three of a kind";
+
+        //Act
+        var puntajeCalculado = CalcularPuntaje(valoresDados, categoria);
+
+        //Assert
+        puntajeCalculado.Should().Be(puntajeEsperado);
+
     }
 
     private int CalcularPuntaje(int[] valoresDados, string categoria)
@@ -84,8 +115,31 @@ public class YatziTest
             "fives" => CalcularNumericas(valoresDados, CategoriasNumericas.Fives),
             "sixes" => CalcularNumericas(valoresDados, CategoriasNumericas.Sixes),
             "pair" => CalcularPares(valoresDados),
+            "two pairs" => CalcularDosPares(valoresDados),
+            "three of a kind" => CalcularTrio(valoresDados),
             "chance" => CalcularChance(valoresDados)
         };
+    }
+
+    private static int CalcularTrio(int[] valoresDados)
+    {
+        var valorTrio = valoresDados.CountBy(valorDado => valorDado)
+            .Where(conteo => conteo.Value > 2)
+            .Select(conteo => conteo.Key)
+            .FirstOrDefault();
+
+        return valorTrio * 3;
+    }
+
+    private int CalcularDosPares(int[] valoresDados)
+    {
+        var listaPares = valoresDados
+            .CountBy(valorDado => valorDado)
+            .Where(conteo => conteo.Value > 1)
+            .Select(grupo => grupo.Key)
+            .ToList();
+        
+        return listaPares.Count == 2 ? listaPares.Select(pares => pares * 2).Sum() : 0;
     }
 
     private static int CalcularNumericas(int[] valoresDados, CategoriasNumericas tipoCategoria)
@@ -106,7 +160,8 @@ public class YatziTest
 
     private static int CalcularPares(int[] valoresDados)
     {
-        var primerParEncontrado = valoresDados.GroupBy(valorDado => valorDado)
+        var primerParEncontrado = valoresDados
+            .GroupBy(valorDado => valorDado)
             .Where(grupo => grupo.Count() > 1)
             .Select(grupo => grupo.Key)
             .OrderByDescending(grupo => grupo)
